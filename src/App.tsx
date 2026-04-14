@@ -545,6 +545,10 @@ export default function App() {
   };
 
   const handleAnalyzeChat = async (msgsOverride?: ChatMessage[]) => {
+    if (isRateLimited) {
+      console.log("Skipping analysis: AI is in cooldown mode");
+      return;
+    }
     let msgsToAnalyze = msgsOverride || chatMessages;
     if (msgsToAnalyze.length === 0) return;
     
@@ -615,7 +619,7 @@ export default function App() {
       } else if (errorStr.includes("429") || errorStr.includes("RESOURCE_EXHAUSTED")) {
         console.error("Quota still exceeded after retries.");
         setIsRateLimited(true);
-        setTimeout(() => setIsRateLimited(false), 60000); // Reset after 1 minute
+        setTimeout(() => setIsRateLimited(false), 120000); // Reset after 2 minutes
       }
     } finally {
       setIsAnalyzingChat(false);
@@ -1229,7 +1233,7 @@ export default function App() {
                   <div className="flex items-center gap-2">
                     {isRateLimited && (
                       <span className="text-[10px] bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-bold animate-pulse">
-                        AI COOLING DOWN (60s)
+                        AI COOLING DOWN (120s)
                       </span>
                     )}
                     <span className="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-bold">AUTONOMOUS MODE</span>

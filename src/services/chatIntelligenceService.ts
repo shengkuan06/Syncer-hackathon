@@ -20,7 +20,7 @@ export async function analyzeChatStream(
 ): Promise<ProjectMoment[]> {
   console.log(`[ChatIntelligence] Analyzing ${messages.length} messages...`);
   const ai = getAI();
-  const model = "gemini-3.1-pro-preview"; // Use Pro for complex reasoning on chat context
+  const model = "gemini-3-flash-preview"; // Use Flash for chat analysis to reduce quota pressure
 
   const chatContext = messages
     .map((m) => `[${m.platform}] ${m.author} (${m.timestamp}): ${m.content}`)
