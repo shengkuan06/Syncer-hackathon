@@ -20,6 +20,15 @@ export async function extractTasks(
     - You MUST handle "Code-Switching" (mixing multiple languages in one sentence) seamlessly.
     - Focus on the intent and action items regardless of the language used.
     
+    KEYWORD & EVENT IDENTIFICATION:
+    - Scan the input for action-oriented keywords (e.g., "submit", "meeting", "call", "deadline", "todo", "finish", "start", "discuss", "prepare").
+    - Identify if the input refers to a specific Task (something to be done) or an Event (something happening at a specific time).
+    
+    PRECISE TIME EXTRACTION:
+    - Identify specific times mentioned (e.g., "at 3pm", "14:00", "tonight", "tomorrow morning").
+    - Convert relative phrases into absolute ISO-8601 timestamps.
+    - Current Reference Time: ${new Date().toISOString()}
+    
     SPECIAL CONTEXT:
     - If the input looks like a "UMSpectrum" (Moodle) Dashboard screenshot or text:
       - Look for Course Codes (e.g., WIX1001, GIG1012).
